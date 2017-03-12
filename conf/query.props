@@ -5,7 +5,7 @@ lio_current_read,locks,maxprocs,maxsession,miss_latch,pga_aggregate_target, pga,
 pool_dict_cache,pool_free_mem,pool_lib_cache,pool_misc,pool_sql_area,procnum,session_active,session_inactive,session,session_system,sga_buffer_cache, \
 sga_fixed,sga_java_pool,sga_large_pool,sga_log_buffer,sga_shared_pool,tbl_space,userconn,waits_controfileio,waits_directpath_read, \
 waits_file_io,waits_latch,waits_logwrite,waits_multiblock_read,waits_singleblock_read,hitratio_trigger,lio_block_changes,lio_consistent_read,waits_other,waits_sqlnet,users_locked,uptime, \
-dbfilesize,dbsize,dbtime,elapsedtime
+dbfilesize,dbsize,dbtime,elapsedtime,dbtime_load
 
 DataGuardPrimaryQueryList=dg_error,dg_sequence_number
 DataGuardStandbyQueryList=dg_sequence_number_stby
@@ -20,6 +20,19 @@ rman_check_status.Query=select ' DB NAME->'||DB_NAME||'- ROW TYPE->'||ROW_TYPE||
    ORDER  BY END_TIME
 
 rman_check_status.NoDataFound=none
+
+dbtime_load.Query=select round(((real.VALUE - last.value) / 1000000 / 60) / ((sysdate + 1 / 24 / 60 / 60 - to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'), 'yyyymmddHH24MISS')) * 24 * 60) * 100, 2) dbtime_load \
+  from (select * from (select t.end_interval_time, v.value \
+                  FROM DBA_HIST_SYS_TIME_MODEL v, dba_hist_snapshot t \
+                 WHERE v.STAT_NAME = 'DB time' \
+                   and t.snap_id = v.snap_id \
+                   and t.instance_number = v.instance_number \
+                   and v.instance_number = (select instance_number from v$instance) \
+                   and t.begin_interval_time >= sysdate - 70 / (24 * 60) \
+                 order by t.snap_id desc) \
+         where rownum = 1) last, v$SYS_TIME_MODEL real \
+ where real.stat_name = 'DB time' 
+dbtime_load.NoDataFound=none
 
 elapsedtime.Query=select Elapsedtime from (select snap_id,round((to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS') -  to_date(to_char(begin_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS')) * 24 * 60, 0) Elapsedtime from dba_hist_snapshot where begin_interval_time >= sysdate - 70 / (24 * 60) and instance_number = (select instance_number from v$instance) order by snap_id desc) where rownum=1 
 elapsedtime.NoDataFound=none
