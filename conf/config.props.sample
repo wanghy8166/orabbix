@@ -1,0 +1,74 @@
+##comma separed list of Zabbix servers
+#ZabbixServerList=ZabbixServer1,ZabbixServer2
+ZabbixServerList=ZabbixServer1
+#
+#ZabbixServer1.Address=IP_ADDRESS_OF_ZABBIX_SERVER
+ZabbixServer1.Address=192.168.0.84
+#ZabbixServer1.Port=PORT_OF_ZABBIX_SERVER
+ZabbixServer1.Port=10051
+#
+#ZabbixServer2.Address=IP_ADDRESS_OF_ZABBIX_SERVER
+#ZabbixServer2.Port=PORT_OF_ZABBIX_SERVER
+#
+##pidFile
+OrabbixDaemon.PidFile=./logs/orabbix.pid
+##frequency of item's refresh
+OrabbixDaemon.Sleep=300
+##MaxThreadNumber should be >= than the number of your databases
+OrabbixDaemon.MaxThreadNumber=100
+#
+##put here your databases in a comma separated list
+#DatabaseList=DB1,DB2,DB3
+#
+##Configuration of Connection pool
+##if not specified Orabbis is going to use default values (hardcoded)
+##Maximum number of active connection inside pool
+#DatabaseList.MaxActive=10
+##The maximum number of milliseconds that the pool will wait 
+##(when there are no available connections) for a connection to be returned 
+##before throwing an exception, or <= 0 to wait indefinitely. 
+#DatabaseList.MaxWait=100
+#DatabaseList.MaxIdle=1
+#
+##define here your connection string for each database
+#DB1.Url=jdbc:oracle:thin:@server.domain.example.com:<LISTENER_PORT>:DB1
+#DB1.User=zabbix
+#DB1.Password=zabbix_password
+##Those values are optionals if not specified Orabbix is going to use the general values
+#DB1.MaxActive=10
+#DB1.MaxWait=100
+#DB1.MaxIdle=1
+#DB1.QueryListFile=./conf/query.props
+#
+#DB2.Url=jdbc:oracle:thin:@server2.domain.example.com:<LISTENER_PORT>:DB2
+#DB2.User=zabbix
+#DB2.Password=zabbix_password
+#DB2.QueryListFile=./conf/query.props
+#
+#DB3.Url=jdbc:oracle:thin:@server3.domain.example.com:<LISTENER_PORT>:DB3
+#DB3.User=zabbix
+#DB3.Password=zabbix_password
+#DB3.QueryListFile=./conf/query.props
+#
+#
+#
+DatabaseList=orcl1,orcl2
+DatabaseList.MaxActive=10
+DatabaseList.MaxWait=100
+DatabaseList.MaxIdle=1
+
+orcl1.Url=jdbc:oracle:thin:@192.168.0.71:1521:app1
+orcl1.User=zabbix
+orcl1.Password=pwd
+orcl1.MaxActive=10
+orcl1.MaxWait=100
+orcl1.MaxIdle=1
+orcl1.QueryListFile=./conf/query.props
+
+orcl2.Url=jdbc:oracle:thin:@192.168.0.73:1521:app2
+orcl2.User=zabbix
+orcl2.Password=pwd
+orcl2.MaxActive=10
+orcl2.MaxWait=100
+orcl2.MaxIdle=1
+orcl2.QueryListFile=./conf/query_xxx.props
