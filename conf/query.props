@@ -5,7 +5,8 @@ lio_current_read,locks,maxprocs,maxsession,miss_latch,pga_aggregate_target, pga,
 pool_dict_cache,pool_free_mem,pool_lib_cache,pool_misc,pool_sql_area,procnum,session_active,session_inactive,session,session_system,sga_buffer_cache, \
 sga_fixed,sga_java_pool,sga_large_pool,sga_log_buffer,sga_shared_pool,tbl_space,userconn,waits_controfileio,waits_directpath_read, \
 waits_file_io,waits_latch,waits_logwrite,waits_multiblock_read,waits_singleblock_read,hitratio_trigger,lio_block_changes,lio_consistent_read,waits_other,waits_sqlnet,users_locked,uptime, \
-dbfilesize,dbsize,dbtime,elapsedtime,dbtime_load
+dbfilesize,dbsize,dbtime,elapsedtime,dbtime_load, \
+asm_space,dba_jobs,execute_count,user_commits,user_rollbacks,tps 
 
 DataGuardPrimaryQueryList=dg_error,dg_sequence_number
 DataGuardStandbyQueryList=dg_sequence_number_stby
@@ -20,6 +21,21 @@ rman_check_status.Query=select ' DB NAME->'||DB_NAME||'- ROW TYPE->'||ROW_TYPE||
    ORDER  BY END_TIME
 
 rman_check_status.NoDataFound=none
+
+asm_space.Query=select name || ',free_mb:' || free_mb || ',free_rate:' || round((free_mb / total_mb) * 100, 2) || '%;' asmdisk_free from v$ASM_DISKGROUP where round((free_mb / total_mb) * 100, 2) < 10 
+asm_space.NoDataFound=none
+dba_jobs.Query=select count(1) from dba_jobs where BROKEN = 'Y' 
+dba_jobs.NoDataFound=none
+execute_count.Query=select value from v$sysstat where name = 'execute count' 
+execute_count.NoDataFound=none
+user_commits.Query=select value from v$sysstat where name = 'user commits' 
+user_commits.NoDataFound=none
+user_rollbacks.Query=select value from v$sysstat where name = 'user rollbacks' 
+user_rollbacks.NoDataFound=none
+tps.Query=select sum(value) from v$sysstat where name in( 'user rollbacks','user commits') 
+tps.NoDataFound=none
+
+
 
 
 dbtime_load.Query=select round(((real.VALUE - last.value) / 1000000 / 60) / ((sysdate + 1 / 24 / 60 / 60 - to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'), 'yyyymmddHH24MISS')) * 24 * 60) * 100, 2) dbtime_load \
