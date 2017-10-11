@@ -49,13 +49,13 @@ dbtime_load.Query=select round(((real.VALUE - last.value) / 1000000 / 60) / ((sy
                  order by t.snap_id desc) \
          where rownum = 1) last, v$SYS_TIME_MODEL real \
  where real.stat_name = 'DB time' 
-dbtime_load.NoDataFound=none
+dbtime_load.NoDataFound=0
 
 elapsedtime.Query=select Elapsedtime from (select snap_id,round((to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS') -  to_date(to_char(begin_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS')) * 24 * 60, 0) Elapsedtime from dba_hist_snapshot where begin_interval_time >= sysdate - 140 / (24 * 60) and instance_number = (select instance_number from v$instance) order by snap_id desc) where rownum=1
-elapsedtime.NoDataFound=none
+elapsedtime.NoDataFound=0
 
 dbtime.Query=select dbtime from (select SNAP_ID,round((VALUE - lag(value, 1) over(order by snap_id)) / 1000000/60) dbtime from dba_hist_sys_time_model where instance_number = (select instance_number from v$instance) AND stat_NAME = 'DB time' ORDER BY SNAP_ID DESC) where rownum=1 
-dbtime.NoDataFound=none
+dbtime.NoDataFound=0
 
 dbfilesize.Query=select to_char(sum(bytes/1024/1024), 'FM99999999999999990') retvalue from dba_data_files
 
@@ -233,7 +233,7 @@ from \
     where t.tablespace_name = d.tablespace(+) and \
     t.tablespace_name = s.tablespace(+) \
     order by 8) \
-    where kperc > 93 \
+    where kperc > 93 and kfree_space < 20480 \
     and tipo <>'T' \
     and tipo <>'U'
 tbl_space.NoDataFound=none
