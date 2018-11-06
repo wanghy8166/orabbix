@@ -1,0 +1,83 @@
+Add support for Zabbix 4.txt
+
+感谢504393421同学修改源码编译为orabbix-1.2.4.jar
+
+orabbix日志：
+ 2018-11-06 00:04:01,046 [main] DEBUG Orabbix - Waking up Goood Morning
+ 2018-11-06 00:04:01,047 [main] ERROR Orabbix - QueryBox - 78
+ 2018-11-06 00:04:01,047 [main] ERROR Orabbix - QueryBox - 80
+ 2018-11-06 00:04:01,047 [main] DEBUG Orabbix - Loaded the properties from ./conf/query.props
+ 2018-11-06 00:04:01,047 [main] DEBUG Orabbix - Note: hitratio_trigger.NoDataFound null or not present null
+ 2018-11-06 00:04:01,047 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQuery null or not present null
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionValue null or not present null
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Note: hitratio_trigger.Period null or not present null
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Note: hitratio_trigger.ExcludeColumnsList error null
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQueryExcludeColumnsList error null
+ 2018-11-06 00:04:01,048 [main] ERROR Orabbix - QueryBox - 86
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Loaded the properties from ./conf/query.props
+ 2018-11-06 00:04:01,048 [main] DEBUG Orabbix - Note: hitratio_trigger.NoDataFound null or not present null
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQuery null or not present null
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionValue null or not present null
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Note: hitratio_trigger.Period null or not present null
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Note: hitratio_trigger.ExcludeColumnsList error null
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQueryExcludeColumnsList error null
+ 2018-11-06 00:04:01,049 [main] ERROR Orabbix - querybox - 90
+ 2018-11-06 00:04:01,049 [main] ERROR Orabbix - firstq==null : false
+ 2018-11-06 00:04:01,049 [main] ERROR Orabbix - extraq==null : false
+ 2018-11-06 00:04:01,049 [main] ERROR Orabbix - querybox - 96
+ 2018-11-06 00:04:01,049 [main] DEBUG Orabbix - Ready to run DBJob for dbname ->orclpdb1
+ 2018-11-06 00:04:01,050 [pool-1-thread-2] DEBUG Orabbix - Starting dbJob on database orclpdb1 QueryList
+ 2018-11-06 00:04:01,052 [pool-1-thread-2] ERROR Orabbix - in Alive()
+ 2018-11-06 00:04:01,052 [pool-1-thread-2] DEBUG Orabbix - sending ZBXDH<req><host>b3JjbHBkYjE=</host><key>YWxpdmU=</key><data>MQ==</data></req>
+ 2018-11-06 00:04:01,054 [pool-1-thread-2] DEBUG Orabbix - received OK
+ 2018-11-06 00:04:01,055 [pool-1-thread-2] DEBUG Orabbix - sending ZBXDp<req><host>b3JjbHBkYjE=</host><key>T3JhYmJpeC5WZXJzaW9u</key><data>T3JhYmJpeCBWZXJzaW9uIDEuMi4zIA==</data></req>
+ 2018-11-06 00:04:01,056 [pool-1-thread-2] DEBUG Orabbix - received OK
+ 2018-11-06 00:04:01,056 [pool-1-thread-2] INFO  Orabbix - Done with dbJob on database orclpdb1 QueryList elapsed time 6 ms
+ 2018-11-06 00:05:01,050 [main] DEBUG Orabbix - Waking up Goood Morning
+ 2018-11-06 00:05:01,051 [main] ERROR Orabbix - QueryBox - 78
+ 2018-11-06 00:05:01,051 [main] ERROR Orabbix - QueryBox - 80
+ 2018-11-06 00:05:01,051 [main] DEBUG Orabbix - Loaded the properties from ./conf/query.props
+ 2018-11-06 00:05:01,051 [main] DEBUG Orabbix - Note: hitratio_trigger.NoDataFound null or not present null
+ 2018-11-06 00:05:01,051 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQuery null or not present null
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionValue null or not present null
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Note: hitratio_trigger.Period null or not present null
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Note: hitratio_trigger.ExcludeColumnsList error null
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQueryExcludeColumnsList error null
+ 2018-11-06 00:05:01,052 [main] ERROR Orabbix - QueryBox - 86
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Loaded the properties from ./conf/query.props
+ 2018-11-06 00:05:01,052 [main] DEBUG Orabbix - Note: hitratio_trigger.NoDataFound null or not present null
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQuery null or not present null
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionValue null or not present null
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Note: hitratio_trigger.Period null or not present null
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Note: hitratio_trigger.ExcludeColumnsList error null
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Note: hitratio_trigger.RaceConditionQueryExcludeColumnsList error null
+ 2018-11-06 00:05:01,053 [main] ERROR Orabbix - querybox - 90
+ 2018-11-06 00:05:01,053 [main] ERROR Orabbix - firstq==null : false
+ 2018-11-06 00:05:01,053 [main] ERROR Orabbix - extraq==null : false
+ 2018-11-06 00:05:01,053 [main] ERROR Orabbix - querybox - 96
+ 2018-11-06 00:05:01,053 [main] DEBUG Orabbix - Ready to run DBJob for dbname ->orclpdb1
+ 2018-11-06 00:05:01,054 [pool-1-thread-3] DEBUG Orabbix - Starting dbJob on database orclpdb1 QueryList
+ 2018-11-06 00:05:01,056 [pool-1-thread-3] ERROR Orabbix - in Alive()
+ 2018-11-06 00:05:01,056 [pool-1-thread-3] DEBUG Orabbix - Actual query is hitratio_triggerNextrun 2018/11/06 00:07:01 on database=orclpdb1 Period=2
+ 2018-11-06 00:05:01,057 [pool-1-thread-3] DEBUG Orabbix - I'm going to return 64.83664387278845110170411375230652339086 for query hitratio_trigger on database=orclpdb1
+ 2018-11-06 00:05:01,057 [pool-1-thread-3] DEBUG Orabbix - Item retrieved 1 on database orclpdb1
+ 2018-11-06 00:05:01,058 [pool-1-thread-3] DEBUG Orabbix - dbname orclpdb1 sending item  hitratio_trigger value 64.83664387278845110170411375230652339086
+ 2018-11-06 00:05:01,058 [pool-1-thread-3] DEBUG Orabbix - sending ZBXDH<req><host>b3JjbHBkYjE=</host><key>YWxpdmU=</key><data>MQ==</data></req>
+ 2018-11-06 00:05:01,060 [pool-1-thread-3] DEBUG Orabbix - received OK
+ 2018-11-06 00:05:01,060 [pool-1-thread-3] DEBUG Orabbix - sending ZBXDp<req><host>b3JjbHBkYjE=</host><key>T3JhYmJpeC5WZXJzaW9u</key><data>T3JhYmJpeCBWZXJzaW9uIDEuMi4zIA==</data></req>
+ 2018-11-06 00:05:01,061 [pool-1-thread-3] DEBUG Orabbix - received OK
+ 2018-11-06 00:05:01,062 [pool-1-thread-3] DEBUG Orabbix - sending ZBXD�<req><host>b3JjbHBkYjE=</host><key>aGl0cmF0aW9fdHJpZ2dlcg==</key><data>NjQuODM2NjQzODcyNzg4NDUxMTAxNzA0MTEzNzUyMzA2NTIzMzkwODY=</data></req>
+ 2018-11-06 00:05:31,093 [pool-1-thread-3] ERROR Orabbix - Error contacting Zabbix server 172.17.10.83  on port 10051
+ 2018-11-06 00:05:31,093 [pool-1-thread-3] INFO  Orabbix - Done with dbJob on database orclpdb1 QueryList elapsed time 30039 ms
+
+zabbix server日志：
+   293:20181106:000531.093 Message from 172.18.0.1 is shorter than expected 12435439 bytes. Message ignored. 
+
+分析
+监控项:hitratio_trigger
+监控项类型:浮点数
+sql为:select gethitratio*100 "get_pct" FROM v$librarycache where namespace ='TRIGGER'
+sql值为:64.83664387278845110170411375230652339086
+
+修改
+sql为:select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace ='TRIGGER'
