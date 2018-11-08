@@ -97,19 +97,17 @@ dbblockgets.Query=select to_char(sum(decode(name,'db block gets', value,0))) "bl
 dbconsistentgets.Query=select to_char(sum(decode(name,'consistent gets', value,0))) "consistent_gets" \
 	FROM v$sysstat
 
-dbhitratio.Query=select ( \
-	sum(decode(name,'consistent gets', value,0)) + sum(decode(name,'db block gets', value,0)) - sum(decode(name,'physical reads', value,0))) / (sum(decode(name,'consistent gets', value,0)) + sum(decode(name,'db block gets', value,0)) ) * 100 "hit_ratio" \
-	FROM v$sysstat
+dbhitratio.Query=select round((sum(decode(name, 'consistent gets', value, 0)) + sum(decode(name, 'db block gets', value, 0)) - sum(decode(name, 'physical reads', value, 0))) / (sum(decode(name, 'consistent gets', value, 0)) + sum(decode(name, 'db block gets', value, 0))) * 100, 4) "hit_ratio" FROM v$sysstat
 dbphysicalread.Query=select sum(decode(name,'physical reads', value,0)) "phys_reads" FROM v$sysstat
 
 dbversion.Query=select COMP_ID||' '||COMP_NAME||' '||VERSION||' '||STATUS||' <br />' from dba_registry union SELECT ' - SERVERNAME = <b>'||UTL_INADDR.get_host_name ||'</b> - SERVERADDRESS = <b>'||UTL_INADDR.get_host_address||'</b> <br />'from dual union SELECT ' - DB_NAME = <b>'||SYS_CONTEXT ('USERENV', 'DB_NAME') ||'</b> - INSTANCE_NAME = <b>' ||SYS_CONTEXT ('USERENV', 'INSTANCE_NAME')||'</b> <br />' FROM dual
 
 sqlnotindexed.Query=SELECT SUM(DECODE(NAME, 'table scans (long tables)', VALUE, 0))/ (SUM(DECODE(NAME, 'table scans (long tables)', VALUE, 0))+SUM(DECODE(NAME, 'table scans (short tables)', VALUE, 0)))*100 SQL_NOT_INDEXED FROM V$SYSSTAT WHERE 1=1 AND ( NAME IN ('table scans (long tables)','table scans (short tables)') )
 
-hitratio_body.Query=select gethitratio*100 "get_pct" FROM v$librarycache where namespace ='BODY'
-hitratio_sqlarea.Query=select gethitratio*100 "get_pct" FROM v$librarycache where namespace ='SQL AREA'
-hitratio_trigger.Query=select gethitratio*100 "get_pct" FROM v$librarycache where namespace ='TRIGGER'
-hitratio_table_proc.Query=select gethitratio*100 "get_pct" FROM v$librarycache where namespace = 'TABLE/PROCEDURE'
+hitratio_body.Query=select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace ='BODY'
+hitratio_sqlarea.Query=select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace ='SQL AREA'
+hitratio_trigger.Query=select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace ='TRIGGER'
+hitratio_table_proc.Query=select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace = 'TABLE/PROCEDURE'
 
 lio_block_changes.Query=SELECT to_char(SUM(DECODE(NAME,'db block changes',VALUE,0))) \
 FROM V$SYSSTAT \
@@ -184,10 +182,10 @@ pga.Query=select to_char(decode( unit,'bytes', value/1024/1024, value),'99999999
 phio_datafile_reads.Query=select to_char(sum(decode(name,'physical reads direct',value,0))) FROM V$SYSSTAT where name ='physical reads direct'
 phio_datafile_writes.Query=select to_char(sum(decode(name,'physical writes direct',value,0))) FROM V$SYSSTAT where name ='physical writes direct'
 phio_redo_writes.Query=select to_char(sum(decode(name,'redo writes',value,0))) FROM V$SYSSTAT where name ='redo writes'
-pinhitratio_body.Query=select pins/(pins+reloads)*100 "pin_hit ratio" FROM v$librarycache where namespace ='BODY'
-pinhitratio_sqlarea.Query=select pins/(pins+reloads)*100 "pin_hit ratio" FROM v$librarycache where namespace ='SQL AREA'
-pinhitratio_table-proc.Query=select pins/(pins+reloads)*100 "pin_hit ratio" FROM v$librarycache where namespace ='TABLE/PROCEDURE'
-pinhitratio_trigger.Query=select pins/(pins+reloads)*100 "pin_hit ratio" FROM v$librarycache where namespace ='TRIGGER'
+pinhitratio_body.Query=select round(pins/(pins+reloads)*100,4) "pin_hit ratio" FROM v$librarycache where namespace ='BODY'
+pinhitratio_sqlarea.Query=select round(pins/(pins+reloads)*100,4) "pin_hit ratio" FROM v$librarycache where namespace ='SQL AREA'
+pinhitratio_table-proc.Query=select round(pins/(pins+reloads)*100,4) "pin_hit ratio" FROM v$librarycache where namespace ='TABLE/PROCEDURE'
+pinhitratio_trigger.Query=select round(pins/(pins+reloads)*100,4) "pin_hit ratio" FROM v$librarycache where namespace ='TRIGGER'
 pool_dict_cache.Query=SELECT TO_CHAR(ROUND(SUM(decode(pool,'shared pool',decode(name,'dictionary cache',(bytes)/(1024*1024),0),0)),2)) pool_dict_cache FROM V$SGASTAT
 pool_free_mem.Query=SELECT TO_CHAR(ROUND(SUM(decode(pool,'shared pool',decode(name,'free memory',(bytes)/(1024*1024),0),0)),2)) pool_free_mem FROM V$SGASTAT
 pool_lib_cache.Query=SELECT TO_CHAR(ROUND(SUM(decode(pool,'shared pool',decode(name,'library cache',(bytes)/(1024*1024),0),0)),2)) pool_lib_cache FROM V$SGASTAT
