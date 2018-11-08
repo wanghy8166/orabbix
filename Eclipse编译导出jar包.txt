@@ -1,0 +1,18 @@
+Eclipse编译导出jar包
+
+Eclipse Mars.2 Release (4.5.2)
+http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/mars/2/eclipse-jee-mars-2-win32-x86_64.zip&mirror_id=105
+
+MD5 (eclipse-jee-mars-2-win32-x86_64.zip) = 686f0c8dfa1aab53fa13e50aacd84a4a
+大小: 289018133 字节
+
+https://www.oracle.com/technetwork/java/javase/archive-139210.html
+jdk-7u80-windows-x64.exe
+
+安装略
+新建java项目，导入源码
+如果没有lib文件夹，就新建它，并导入jar包
+将lib里的jar包"Add to Build Path"
+在"Java Compiler",选择"Compiler compliance level"为1.6
+在src右键Export,选"JAR file"
+其他默认、完成
