@@ -81,3 +81,34 @@ sql值为:64.83664387278845110170411375230652339086
 
 修改
 sql为:select round(gethitratio*100,4) "get_pct" FROM v$librarycache where namespace ='TRIGGER'
+
+====================================================================================================
+有朋友提到公司的监控项超多，是否有这方面的限制，我的测试如下：
+由于open_cursors默认值为300，所以监控项超过300个的话，需要修改oracle参数配置，
+修改之后，运行正常，1000个监控正常
+ 2018-11-17 15:07:08,104 [pool-1-thread-68] ERROR Orabbix - Error on DBEnquiry on query=hitratio_trigger0499 on database=orclcdb Error returned is java.lang.IllegalArgumentException: null value for key 'hitratio_trigger0499'
+ 2018-11-17 15:07:08,105 [pool-1-thread-68] WARN  Orabbix - Error while executing ->hitratio_trigger0500- on database ->orclcdb- Exception received ORA-00604: error occurred at recursive SQL level 1
+ORA-01000: maximum open cursors exceeded
+ORA-01000: maximum open cursors exceeded
+
+处理：
+show parameter open_cursors;
+alter system set open_cursors=3000 scope=both;
+
+当配置1w个时，报错如下：
+ 2018-11-17 16:10:34,705 [pool-1-thread-4] ERROR Orabbix - Error on DBEnquiry on query=hitratio_trigger6011 on database=orclcdb Error returned is java.lang.IllegalArgumentException: null value for key 'hitratio_trigger6011'
+ 2018-11-17 16:10:41,940 [pool-1-thread-13] INFO  Orabbix - Done with dbJob on database orclpdb1 QueryList elapsed time 7380 ms
+ 2018-11-17 16:10:43,304 [pool-1-thread-4] WARN  Orabbix - Error while executing ->hitratio_trigger6140- on database ->orclcdb- Exception received ORA-04088: error during execution of trigger 'C##HD40.LOGON_DENIED_TO_ALERT'
+ORA-00604: error occurred at recursive SQL level 2
+ORA-04031: unable to allocate 12280 bytes of shared memory ("shared pool","select /*+ index(idl_ub1$ i_...","KKSSP^135","kglseshtSegs")
+ORA-04031: unable to allocate 12280 bytes of shared memory ("shared pool","unknown object","KKSSP^135","kglseshtSegs")
+
+处理：修改oracle参数配置，并强制重启oracle
+create pfile='/opt/oracle/pfile_orclcdb_20181117.ora' from spfile;
+alter system set open_cursors=30000 scope=both;
+ALTER SYSTEM SET sga_target = 5000M  SCOPE=spfile;
+ALTER SYSTEM SET sga_max_size = 5000M SCOPE=spfile;
+startup force;
+之后1w个监控正常，只是获取一次数据非常慢，长达11分钟
+ 2018-11-17 16:37:12,561 [pool-1-thread-2] INFO  Orabbix - Done with dbJob on database orclcdb QueryList elapsed time 688001 ms
+ 
