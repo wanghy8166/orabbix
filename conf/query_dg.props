@@ -7,7 +7,8 @@ sga_fixed,sga_java_pool,sga_large_pool,sga_log_buffer,sga_shared_pool,tbl_space,
 waits_file_io,waits_latch,waits_logwrite,waits_multiblock_read,waits_singleblock_read,hitratio_trigger,lio_block_changes,lio_consistent_read,waits_other,waits_sqlnet,users_locked,uptime, \
 dbfilesize,dbsize,dbtime,elapsedtime,dbtime_load, \
 asm_space,dba_jobs,execute_count,user_commits,user_rollbacks,tps,\
-dg_archived_log
+dg_archived_log, \
+checkBitAttack
 
 DataGuardPrimaryQueryList=dg_error,dg_sequence_number
 DataGuardStandbyQueryList=dg_sequence_number_stby
@@ -22,6 +23,9 @@ rman_check_status.Query=select ' DB NAME->'||DB_NAME||'- ROW TYPE->'||ROW_TYPE||
    ORDER  BY END_TIME
 
 rman_check_status.NoDataFound=none
+
+checkBitAttack.Query=Select Count(1) From (Select 1 From Dba_Triggers Where Trigger_Name Like 'DBMS_%_INTERNAL%' Union All Select 1 From Dba_Procedures Where Object_Name Like 'DBMS_%_INTERNAL% ' Union All Select 1 From Dba_Objects Where Object_Name Like 'DBMS_CORE_INTERNA%' Or Object_Name Like 'DBMS_SYSTEM_INTERNA%' Or Object_Name Like 'DBMS_SUPPORT_INTERNA%' Or Object_Name Like 'DBMS_STANDARD_FUN9%' Or Object_Name Like 'ORACHK%' Union All Select 1 From Dba_Jobs Where What Like 'DBMS_STANDARD_FUN9%')
+checkBitAttack.Period=60
 
 dg_archived_log.Query=select count(1) from v$archived_log where applied = 'NO' 
 dg_archived_log.NoDataFound=none
