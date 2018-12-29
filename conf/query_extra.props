@@ -1,0 +1,3 @@
+DefaultQueryPeriod=10
+QueryList=test
+test.Query=select count(sysdate) cnt from dual
