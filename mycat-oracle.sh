@@ -165,3 +165,14 @@ https://github.com/MyCATApache/Mycat-Server/issues/2141
     如果要查历史，需要切换登录不同的oracle库；
 2、测试后使用mycat
     可以改用jdbc(mysql驱动源)连接mycat做测试，主要功能通过后再使用。
+====================================================================================================
+Select '<table name="' || Table_Name ||
+       '" dataNode="dn1,dn2,dn3" rule="auto-sharding-long" />' "拼接法批量添加table"
+  From Dba_Tables
+ Where Owner = 'SYS'
+ Order By 1;
+
+FAQ:
+MySQL [TESTDB]> select a.*,b.* from province a,customer5 b where a.id=b.id order by a.id;
+ERROR 1064 (HY000): invalid route in sql, multi tables found but datanode has no intersection  sql:select a.*,b.* from province a,customer5 b where a.id=b.id order by a.id
+////分析:一个datanode内应包含所有参与join的表,得出join结果,多个datanode的结果再做union all;所以分片的数据内容应该遵循相同的分片规则;
