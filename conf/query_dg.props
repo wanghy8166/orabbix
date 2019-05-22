@@ -46,6 +46,7 @@ tps.NoDataFound=none
 
 
 
+# adg备库,如果dbtime_load指标超高,一种情况是v$SYS_TIME_MODEL中DB time的VALUE异常,建议重启实例再观察.
 dbtime_load.Query=select round(((case when real.VALUE - last.value > 0 then real.VALUE - last.value else 0 end) / 1000000 / 60) / ((sysdate + 1 / 24 / 60 / 60 - to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'), 'yyyymmddHH24MISS')) * 24 * 60) * 100, 2) dbtime_load \
   from (select * from (select t.end_interval_time, v.value \
                   FROM DBA_HIST_SYS_TIME_MODEL v, dba_hist_snapshot t \
