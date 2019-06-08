@@ -55,7 +55,7 @@ dbtime_load.Query=select round(((case when real.VALUE - last.value > 0 then real
                    and t.instance_number = v.instance_number \
                    and v.instance_number = (select instance_number from v$instance) \
                    and t.begin_interval_time >= sysdate - 140 / (24 * 60) \
-                 order by t.snap_id desc) \
+                 order by t.snap_id desc,v.value desc) \
          where rownum = 1) last, v$SYS_TIME_MODEL real \
  where real.stat_name = 'DB time' 
 dbtime_load.NoDataFound=0
