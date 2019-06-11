@@ -46,17 +46,8 @@ tps.NoDataFound=none
 
 
 
-# 主库是RAC的情况下,adg取自己的V$SYS_TIME_MODEL.DB time.VALUE因为应用归档而耗时比rac某一节点高出许多,这时的dbtime_load非常高,改为与rac中的最大值比较
-dbtime_load.Query=select round(((case when real.VALUE - last.value > 0 then real.VALUE - last.value else 0 end) / 1000000 / 60) / ((sysdate + 1 / 24 / 60 / 60 - to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'), 'yyyymmddHH24MISS')) * 24 * 60) * 100, 2) dbtime_load \
-  from (select * from (select t.end_interval_time, v.value \
-                  FROM DBA_HIST_SYS_TIME_MODEL v, dba_hist_snapshot t \
-                 WHERE v.STAT_NAME = 'DB time' \
-                   and t.snap_id = v.snap_id \
-                   and t.instance_number = v.instance_number \
-                   and t.begin_interval_time >= sysdate - 140 / (24 * 60) \
-                 order by t.snap_id desc,v.value desc) \
-         where rownum = 1) last, v$SYS_TIME_MODEL real \
- where real.stat_name = 'DB time' 
+# ADG备库取消该监控项
+dbtime_load.Query=select 0 from dual 
 dbtime_load.NoDataFound=0
 
 elapsedtime.Query=select Elapsedtime from (select snap_id,round((to_date(to_char(end_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS') -  to_date(to_char(begin_interval_time, 'yyyymmddHH24MISS'),'yyyymmddHH24MISS')) * 24 * 60, 0) Elapsedtime from dba_hist_snapshot where begin_interval_time >= sysdate - 140 / (24 * 60) and instance_number = (select instance_number from v$instance) order by snap_id desc) where rownum=1
