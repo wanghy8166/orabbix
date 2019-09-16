@@ -28,6 +28,7 @@ checkBitAttack.Period=60
 
 asm_space.Query=select name || ',free_mb:' || free_mb || ',free_rate:' || round((free_mb / total_mb) * 100, 2) || '%;' asmdisk_free from v$ASM_DISKGROUP where round((free_mb / total_mb) * 100, 2) < 10 
 asm_space.NoDataFound=none
+asm_space.Period=60
 dba_jobs.Query=select count(1) from dba_jobs where BROKEN = 'Y' 
 dba_jobs.NoDataFound=none
 execute_count.Query=select value from v$sysstat where name = 'execute count' 
