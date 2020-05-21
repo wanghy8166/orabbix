@@ -95,6 +95,7 @@ audit.Query=select username "username", \
 	where (sysdate - timestamp)*24 < 1 and returncode <> 0 \
 	order by timestamp
 audit.NoDataFound=none
+audit.Period=60
 
 dbblockgets.Query=select to_char(sum(decode(name,'db block gets', value,0))) "block_gets" \
 	FROM v$sysstat
